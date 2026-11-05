@@ -2,8 +2,8 @@ import torch
 from torch import nn
 
 
-# 自定义神经网络模型
-class CustomModel(nn.Module):
+# 多层感知机（全连接网络）
+class MLP(nn.Module):
     def __init__(self):
         super().__init__()
         # define layers

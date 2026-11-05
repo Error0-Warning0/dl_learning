@@ -3,7 +3,7 @@ import os
 import config
 import torch
 from matplotlib import pyplot as plt
-from model import CustomModel
+from model import MLP
 from torch import nn
 from torch.utils.data import DataLoader, random_split
 from torchvision import datasets, transforms
@@ -34,7 +34,7 @@ train_loader = DataLoader(train_dataset, batch_size=config.BATCH_SIZE, shuffle=T
 val_loader = DataLoader(val_dataset, batch_size=config.BATCH_SIZE, shuffle=False)
 
 # model, loss function, and optimizer
-model = CustomModel().to(device)
+model = MLP().to(device)
 loss_fn = nn.CrossEntropyLoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=config.LEARNING_RATE)
 

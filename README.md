@@ -2,15 +2,19 @@
 
 我的深度学习学习记录，使用 PyTorch。每个主题一个文件夹，按学习顺序编号，各自可以单独运行。
 
+**长期目标：** 把超分辨率用在遥感图像的小目标检测上，能看懂并改进 RT-DETR、Super-DETR 这类模型。这个仓库只放打基础的练习，研究项目单独放在别的仓库。
+
 ## 学习进度
 
 | 编号 | 主题 | 内容 | 状态 | 结果 |
 |---|---|---|---|---|
 | 01 | [MNIST 手写数字识别](01_mnist/) | 全连接网络（MLP），接下来加 CNN | 进行中 | MLP 测试准确率 97.96% |
-| 02 | CIFAR-10 | 彩色图片、更深的 CNN、数据增强、BatchNorm | 计划中 | |
-| 03 | RNN / LSTM | 序列数据：情感分类或时间序列预测 | 计划中 | |
-| 04 | Seq2Seq + Attention | 注意力机制 | 计划中 | |
-| 05 | Transformer | 自注意力、位置编码、字符级文本生成 | 计划中 | |
+| 02 | CNN 进阶（CIFAR-10） | BatchNorm、数据增强、学习率调整、预训练模型，自己写 ResNet | 计划中 | |
+| 03 | 超分辨率 | SRCNN、ESPCN、EDSR，PixelShuffle，MSE 和 SSIM 损失，PSNR 和 SSIM 指标 | 计划中 | |
+| 04 | 目标检测基础 | 边界框、IoU、NMS、COCO AP、FPN、Faster R-CNN、FCOS | 计划中 | |
+| 05 | Transformer | 注意力、多头注意力、位置编码；RNN/LSTM 只了解思路 | 计划中 | |
+| 06 | DETR 和 RT-DETR | Object Query、匈牙利匹配、集合损失，写精简版 DETR，再读 RT-DETR | 计划中 | |
+| 07 | 超分辨率 + 小目标检测 | AI-TOD 数据集、小目标指标、频域融合、联合训练，读懂 Super-DETR | 计划中 | |
 
 每个主题的运行方式和详细结果，见各自文件夹里的 README。
 

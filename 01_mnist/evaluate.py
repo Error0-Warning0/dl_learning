@@ -1,6 +1,6 @@
 import config
 import torch
-from model import CustomModel
+from model import MLP
 from torch.utils.data import DataLoader
 from torchvision import datasets, transforms
 
@@ -23,7 +23,7 @@ test_dataset = datasets.MNIST(
 test_loader = DataLoader(test_dataset, batch_size=config.BATCH_SIZE, shuffle=False)
 
 # Load the trained model
-model = CustomModel().to(device)
+model = MLP().to(device)
 model.load_state_dict(torch.load(config.MODEL_PATH, map_location=device))
 
 
