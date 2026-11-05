@@ -4,7 +4,7 @@ import sys
 
 import config
 import torch
-from model import MLP
+from model import build_model
 from PIL import Image, ImageOps
 from torchvision import transforms
 
@@ -45,7 +45,7 @@ x = transform(image).unsqueeze(0)
 # (1,28,28) → (1,1,28,28), it is necessary to add a batch dimension for the model input
 
 # Load the trained model
-model = MLP()
+model = build_model(config.MODEL_NAME)
 model.load_state_dict(torch.load(config.MODEL_PATH, map_location=torch.device("cpu")))
 model.eval()
 

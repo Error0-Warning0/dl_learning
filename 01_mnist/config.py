@@ -2,13 +2,15 @@ from pathlib import Path
 
 import torch
 
+MODEL_NAME = "cnn"
+
 # ===== 路径 =====
 BASE_DIR = Path(__file__).resolve().parent
 
 DATA_DIR = BASE_DIR / "data"  # MNIST 数据集
 MODEL_DIR = BASE_DIR / "saved_models"  # 模型保存的文件夹
-MODEL_PATH = MODEL_DIR / "mnist_mlp.pth"  # 模型文件
-CURVES_PATH = MODEL_DIR / "training_curves.png"  # 训练曲线图
+MODEL_PATH = MODEL_DIR / f"mnist_{MODEL_NAME}.pth"  # 模型文件
+CURVES_PATH = MODEL_DIR / f"curves_{MODEL_NAME}.png"  # 训练曲线图
 
 # ===== 超参数 =====
 BATCH_SIZE = 64
