@@ -1,0 +1,15 @@
+# 数据集
+data/
+
+# 文档
+docs/
+
+# 训练好的模型
+saved_models/
+
+# Python 缓存
+__pycache__/
+*.pyc
+
+# 以后可能生成的文件
+*.png
