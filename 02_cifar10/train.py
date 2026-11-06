@@ -5,7 +5,7 @@ import torch
 from matplotlib import pyplot as plt
 from model import build_model
 from torch import nn
-from torch.utils.data import DataLoader, random_split
+from torch.utils.data import DataLoader, Subset
 from torchvision import datasets, transforms
 from tqdm import tqdm
 
@@ -14,22 +14,38 @@ device = config.DEVICE
 print(f"Using device: {device}")
 
 # Data preprocessing (transformations)
-transform = transforms.Compose(
+test_transform = transforms.Compose(
     [
         transforms.ToTensor(),
         transforms.Normalize(config.DATASET_MEAN, config.DATASET_STD),
     ]
 )
+if config.AUGMENT:
+    train_transform = transforms.Compose(
+        [
+            transforms.RandomCrop(32, padding=4),
+            transforms.RandomHorizontalFlip(),
+            transforms.ToTensor(),
+            transforms.Normalize(config.DATASET_MEAN, config.DATASET_STD),
+        ]
+    )
+else:
+    train_transform = test_transform
 
 # datasets
-full_train_dataset = datasets.CIFAR10(
-    root=config.DATA_DIR, train=True, download=True, transform=transform
+train_full = datasets.CIFAR10(
+    root=config.DATA_DIR, train=True, download=True, transform=train_transform
 )
-train_dataset, val_dataset = random_split(
-    full_train_dataset,
-    [config.TRAIN_SIZE, config.VAL_SIZE],
+val_full = datasets.CIFAR10(
+    root=config.DATA_DIR, train=True, download=True, transform=test_transform
+)
+indices = torch.randperm(
+    config.TRAIN_SIZE + config.VAL_SIZE,
     generator=torch.Generator().manual_seed(config.SPLIT_SEED),
-)
+).tolist()
+
+train_dataset = Subset(train_full, indices[: config.TRAIN_SIZE])
+val_dataset = Subset(val_full, indices[config.TRAIN_SIZE :])
 train_loader = DataLoader(train_dataset, batch_size=config.BATCH_SIZE, shuffle=True)
 val_loader = DataLoader(val_dataset, batch_size=config.BATCH_SIZE, shuffle=False)
 

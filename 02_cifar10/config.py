@@ -2,19 +2,22 @@ from pathlib import Path
 
 import torch
 
-MODEL_NAME = "cnn"
+MODEL_NAME = "cnn_bn_drop"  # 可选 "cnn"、"cnn_bn"、"cnn_bn_drop"
+AUGMENT = True  # 训练集是否做数据增强
+# 每次实验的名字，用来给保存的文件起名，比如 cnn_aug
+RUN_NAME = f"{MODEL_NAME}_aug" if AUGMENT else MODEL_NAME
 
 # ===== 路径 =====
 BASE_DIR = Path(__file__).resolve().parent
 
 DATA_DIR = BASE_DIR / "data"  # CIFAR-10 数据集
 MODEL_DIR = BASE_DIR / "saved_models"  # 模型保存的文件夹
-MODEL_PATH = MODEL_DIR / f"cifar10_{MODEL_NAME}.pth"  # 模型文件
-CURVES_PATH = MODEL_DIR / f"curves_{MODEL_NAME}.png"  # 训练曲线图
+MODEL_PATH = MODEL_DIR / f"cifar10_{RUN_NAME}.pth"  # 模型文件
+CURVES_PATH = MODEL_DIR / f"curves_{RUN_NAME}.png"  # 训练曲线图
 
 # ===== 超参数 =====
 BATCH_SIZE = 64
-EPOCHS = 10
+EPOCHS = 30
 LEARNING_RATE = 1e-3
 
 # ===== 数据 =====
