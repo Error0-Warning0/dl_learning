@@ -5,6 +5,7 @@ import torch
 from matplotlib import pyplot as plt
 from model import build_model
 from torch import nn
+from torch.optim.lr_scheduler import CosineAnnealingLR
 from torch.utils.data import DataLoader, Subset
 from torchvision import datasets, transforms
 from tqdm import tqdm
@@ -51,8 +52,12 @@ val_loader = DataLoader(val_dataset, batch_size=config.BATCH_SIZE, shuffle=False
 
 # model, loss function, and optimizer
 model = build_model(config.MODEL_NAME).to(device)
-loss_fn = nn.CrossEntropyLoss()
+loss_fn = nn.CrossEntropyLoss(label_smoothing=config.LABEL_SMOOTHING)
 optimizer = torch.optim.Adam(model.parameters(), lr=config.LEARNING_RATE)
+if config.USE_COSINE:
+    scheduler = CosineAnnealingLR(optimizer, T_max=config.EPOCHS, eta_min=config.LR_MIN)
+else:
+    scheduler = None
 
 
 # Training function and evaluation function
@@ -100,16 +105,21 @@ history_train_loss = []
 history_val_loss = []
 history_train_acc = []
 history_val_acc = []
+history_lr = []
 
 for epoch in range(config.EPOCHS):
+    lr = optimizer.param_groups[0]["lr"]
     train_loss, train_acc = train_one_epoch()
     val_loss, val_acc = evaluate(val_loader)
+    if scheduler is not None:
+        scheduler.step()
     history_train_loss.append(train_loss)
     history_val_loss.append(val_loss)
     history_train_acc.append(train_acc)
     history_val_acc.append(val_acc)
+    history_lr.append(lr)
     print(
-        f"Epoch {epoch + 1}/{config.EPOCHS}, "
+        f"Epoch {epoch + 1}/{config.EPOCHS}, LR: {lr:.2e}, "
         f"Train Loss: {train_loss:.4f}, Val Loss: {val_loss:.4f}, "
         f"Train Acc: {train_acc:.2%}, Val Acc: {val_acc:.2%}"
     )
@@ -124,9 +134,9 @@ print(f"Best Validation Accuracy: {best_acc:.2%}")
 
 # draw training curves
 epochs = range(1, config.EPOCHS + 1)  # 横轴从第 1 轮开始，和打印的轮次对应
-plt.figure(figsize=(12, 5))  # 整张图宽 12、高 5（单位是英寸）
+plt.figure(figsize=(16, 5))  # 整张图宽 16、高 5（单位是英寸）
 
-plt.subplot(1, 2, 1)  # 1 行 2 列，现在画第 1 个
+plt.subplot(1, 3, 1)  # 1 行 3 列，现在画第 1 个
 plt.plot(epochs, history_train_loss, label="Train Loss")
 plt.plot(epochs, history_val_loss, label="Val Loss")
 plt.xlabel("Epoch")
@@ -134,12 +144,18 @@ plt.ylabel("Loss")
 plt.legend()  # 显示图例（label 的文字）
 plt.grid(True)  # 显示网格
 
-plt.subplot(1, 2, 2)  # 画第 2 个
+plt.subplot(1, 3, 2)  # 画第 2 个
 plt.plot(epochs, history_train_acc, label="Train Acc")
 plt.plot(epochs, history_val_acc, label="Val Acc")
 plt.xlabel("Epoch")
 plt.ylabel("Accuracy")
 plt.legend()
+plt.grid(True)
+
+plt.subplot(1, 3, 3)
+plt.plot(epochs, history_lr)
+plt.xlabel("Epoch")
+plt.ylabel("Learning Rate")
 plt.grid(True)
 
 plt.tight_layout()  # 自动调整间距，防止文字重叠

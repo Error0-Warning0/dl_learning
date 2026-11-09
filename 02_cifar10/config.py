@@ -4,8 +4,15 @@ import torch
 
 MODEL_NAME = "resnet56"  # 可选 "cnn"、"cnn_bn"、"cnn_bn_drop"、"resnet20"、"plain20"、"resnet56"、"plain56"
 AUGMENT = True  # 训练集是否做数据增强
+USE_COSINE = True  # 是否使用余弦退火（先大后小的学习率）
+LABEL_SMOOTHING = 0.1  # 标签平滑，0为不使用
+
 # 每次实验的名字，用来给保存的文件起名，比如 cnn_aug
 RUN_NAME = f"{MODEL_NAME}_aug" if AUGMENT else MODEL_NAME
+if USE_COSINE:
+    RUN_NAME += "_cos"
+if LABEL_SMOOTHING > 0:
+    RUN_NAME += "_ls"
 
 # ===== 路径 =====
 BASE_DIR = Path(__file__).resolve().parent
@@ -19,6 +26,7 @@ CURVES_PATH = MODEL_DIR / f"curves_{RUN_NAME}.png"  # 训练曲线图
 BATCH_SIZE = 64
 EPOCHS = 30
 LEARNING_RATE = 1e-3
+LR_MIN = 1e-5  # 余弦退火最后降到的最小学习率
 
 # ===== 数据 =====
 TRAIN_SIZE = 45000  # 训练集张数
