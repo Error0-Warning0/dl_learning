@@ -2,7 +2,7 @@ from pathlib import Path
 
 import torch
 
-MODEL_NAME = "cnn_bn_drop"  # 可选 "cnn"、"cnn_bn"、"cnn_bn_drop"
+MODEL_NAME = "resnet56"  # 可选 "cnn"、"cnn_bn"、"cnn_bn_drop"、"resnet20"、"plain20"、"resnet56"、"plain56"
 AUGMENT = True  # 训练集是否做数据增强
 # 每次实验的名字，用来给保存的文件起名，比如 cnn_aug
 RUN_NAME = f"{MODEL_NAME}_aug" if AUGMENT else MODEL_NAME

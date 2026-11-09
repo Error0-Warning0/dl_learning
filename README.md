@@ -9,7 +9,7 @@
 | 编号 | 主题 | 内容 | 状态 | 结果 |
 |---|---|---|---|---|
 | 01 | [MNIST 手写数字识别](01_mnist/) | 全连接网络（MLP）和 CNN | 已完成 | MLP 97.96%，CNN 99.20% |
-| 02 | [CNN 进阶（CIFAR-10）](02_cifar10/) | 数据增强、BatchNorm、Dropout，自己写 ResNet，学习率调整、预训练模型 | 进行中 | 基线 72.17%，数据增强 78.19% |
+| 02 | [CNN 进阶（CIFAR-10）](02_cifar10/) | 数据增强、BatchNorm、Dropout，自己写 ResNet，学习率调整、预训练模型 | 进行中 | 基线 72.17%，数据增强 78.19%，ResNet-56 87.49% |
 | 03 | 超分辨率 | SRCNN、ESPCN、EDSR，PixelShuffle，MSE 和 SSIM 损失，PSNR 和 SSIM 指标 | 计划中 | |
 | 04 | 目标检测基础 | 边界框、IoU、NMS、COCO AP、FPN、Faster R-CNN、FCOS | 计划中 | |
 | 05 | Transformer | 注意力、多头注意力、位置编码；RNN/LSTM 只了解思路 | 计划中 | |
