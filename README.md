@@ -10,11 +10,11 @@
 |---|---|---|---|---|
 | 01 | [MNIST 手写数字识别](01_mnist/) | 全连接网络（MLP）和 CNN | 已完成 | MLP 97.96%，CNN 99.20% |
 | 02 | [CNN 进阶（CIFAR-10）](02_cifar10/) | 数据增强、BatchNorm、Dropout，自己写 ResNet，学习率调度、标签平滑 | 已完成 | 基线 72.17%，数据增强 78.19%，ResNet-56 + 余弦退火 + 标签平滑 89.08% |
-| 03 | 超分辨率 | SRCNN、ESPCN、EDSR，PixelShuffle，MSE 和 SSIM 损失，PSNR 和 SSIM 指标 | 计划中 | |
-| 04 | 目标检测基础 | 边界框、IoU、NMS、COCO AP、FPN、Faster R-CNN、FCOS | 计划中 | |
-| 05 | Transformer | 注意力、多头注意力、位置编码；RNN/LSTM 只了解思路 | 计划中 | |
-| 06 | DETR 和 RT-DETR | Object Query、匈牙利匹配、集合损失，写精简版 DETR，再读 RT-DETR | 计划中 | |
-| 07 | 超分辨率 + 小目标检测 | AI-TOD 数据集、小目标指标、频域融合、联合训练，读懂 Super-DETR | 计划中 | |
+| 03 | 超分辨率基础 | SRCNN、ESPCN/PixelShuffle、多尺度特征超分 + ASFF/softmax 融合，MSE/SSIM/TV 损失，PSNR 和 SSIM 指标 | 计划中 | |
+| 04 | 目标检测与 AI-TOD | 边界框、IoU、NMS、COCO AP（含 AP_tiny/AP_small 分层）、FPN、anchor-free，在 AI-TOD 上跑通 COCO 评估 | 计划中 | |
+| 05 | Transformer 与可变形注意力 | 注意力、多头注意力、位置编码，deformable attention 的采样偏移与权重，编码器-解码器，去噪查询 | 计划中 | |
+| 06 | DETR 和 RT-DETR | 集合预测、匈牙利匹配、VFL/L1/GIoU、query selection；写精简版 DETR，再读 RT-DETRv2 的 encoder/decoder/criterion | 计划中 | |
+| 07 | 超分辨率与小目标检测 | AI-TOD 数据集、小目标指标、频域融合、联合训练，读懂 Super-DETR 论文 | 计划中 | |
 
 每个主题的运行方式和详细结果，见各自文件夹里的 README。
 
