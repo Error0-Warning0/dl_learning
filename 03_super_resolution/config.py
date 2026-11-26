@@ -22,5 +22,18 @@ NUM_WORKERS = 2
 TRAIN_REPEAT = 10  # 每张训练图每轮随机裁几个 patch
 VAL_LIMIT = 20  # 每轮验证只用前多少张 DIV2K valid 图
 
+# ===== 模型和训练 =====
+MODEL_NAME = "srcnn"  # 以后会有 "espcn" 等
+EPOCHS = 20
+LEARNING_RATE = 1e-3  # 初始学习率
+LR_MIN = 1e-5  # 余弦退火最后降到的最小学习率
+USE_COSINE = True
+
+# ===== 保存路径 =====
+RUN_NAME = MODEL_NAME
+MODEL_PATH = MODEL_DIR / f"sr_{RUN_NAME}.pth"
+CURVES_PATH = MODEL_DIR / f"curves_{RUN_NAME}.png"
+COMPARE_PATH = MODEL_DIR / f"compare_{RUN_NAME}.png"
+
 # ===== 设备 =====
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
