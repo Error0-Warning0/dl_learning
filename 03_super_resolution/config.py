@@ -23,7 +23,7 @@ TRAIN_REPEAT = 10  # 每张训练图每轮随机裁几个 patch
 VAL_LIMIT = 20  # 每轮验证只用前多少张 DIV2K valid 图
 
 # ===== 模型和训练 =====
-MODEL_NAME = "srcnn"  # 以后会有 "espcn" 等
+MODEL_NAME = "espcn"  #  "srcnn""espcn"
 EPOCHS = 20
 LEARNING_RATE = 1e-3  # 初始学习率
 LR_MIN = 1e-5  # 余弦退火最后降到的最小学习率

@@ -26,14 +26,36 @@ class SRCNN(nn.Module):
         return self.conv3(x)
 
 
+class ESPCN(nn.Module):
+    """在低清图上卷积，最后用 PixelShuffle 一次放大。"""
+
+    def __init__(self):
+        super().__init__()
+        # 每个低清像素要预测 SCALE×SCALE 个子像素，每个子像素 3 个颜色
+        out_channels = 3 * config.SCALE**2
+        self.conv1 = nn.Conv2d(3, 64, kernel_size=5, padding=2)
+        self.conv2 = nn.Conv2d(64, 32, kernel_size=3, padding=1)
+        self.conv3 = nn.Conv2d(32, out_channels, kernel_size=3, padding=1)
+        self.pixel_shuffle = nn.PixelShuffle(config.SCALE)
+
+    def forward(self, lr):
+        x = F.relu(self.conv1(lr))
+        x = F.relu(self.conv2(x))
+        x = self.conv3(x)  # (N, 3*SCALE**2, H, W)
+        return self.pixel_shuffle(x)  # (N, 3, H*SCALE, W*SCALE)
+
+
 def build_model(name):
     if name == "srcnn":
         return SRCNN()
+    if name == "espcn":
+        return ESPCN()
     raise ValueError(f"未知的模型名：{name}")
 
 
 if __name__ == "__main__":
     x = torch.randn(4, 3, 48, 48)
-    model = build_model("srcnn")
-    print(model(x).shape)
-    print(sum(p.numel() for p in model.parameters()))
+    for name in ("srcnn", "espcn"):
+        model = build_model(name)
+        n_params = sum(p.numel() for p in model.parameters())
+        print(name, model(x).shape, n_params)
